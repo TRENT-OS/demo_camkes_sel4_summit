@@ -1,0 +1,20 @@
+/*
+ * Demo seL4 Summit
+ *
+ * Copyright (C) 2022, HENSOLDT Cyber GmbH
+ */
+
+import <std_connector.camkes>;
+
+import "components/Client/Client.camkes";
+import "components/Server/Server.camkes";
+
+assembly {
+    composition {
+        component Client client;
+        component Server server;
+
+        connection seL4RPCCall call(from client.if_client, to server.if_server);
+        connection seL4SharedData data(from client.buf_client, to server.buf_server);
+    }
+}
